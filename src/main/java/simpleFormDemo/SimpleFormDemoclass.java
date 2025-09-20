@@ -33,6 +33,7 @@ public class SimpleFormDemoclass {
 		caps.setCapability("build", "TestNG With Java");
 		caps.setCapability("name", m.getName() + this.getClass().getName());
 		caps.setCapability("plugin", "git-testng");
+        caps.setCapability("network","true");
 
 		String[] Tags = new String[] { "Feature", "Magicleap", "Severe" };
 		caps.setCapability("tags", Tags);
@@ -49,7 +50,7 @@ public class SimpleFormDemoclass {
 		Thread.sleep(2000);
 
 		WebElement SimpleFormDemoLink = driver
-				.findElement(By.xpath("//a[@href='https://www.lambdatest.com/selenium-playground/simple-form-demo']"));
+				.findElement(By.xpath("//a[contains(@href, 'simple-form-demo')]"));
 		SimpleFormDemoLink.click();
 
 		String Expectedurl = driver.getCurrentUrl();
@@ -62,18 +63,15 @@ public class SimpleFormDemoclass {
 		}
 
 		String message = "Welcome to LambdaTest.";
-		WebElement mess_send = driver
-				.findElement(By.xpath("//div/input[@class='border border-gray-550 w-full h-35 rounded px-10']"));
+		WebElement mess_send = driver.findElement(By.id("user-message"));
 		Thread.sleep(1000);
 		mess_send.sendKeys(message);
 
 		Thread.sleep(1000);
-		WebElement button = driver.findElement(By.xpath(
-				"//div/button[@class='mt-20 mb-10 bg-black text-white rounded px-15 py-5 hover:bg-lambda-900 focus:outline-none']"));
+		WebElement button = driver.findElement(By.id("showInput"));
 		button.click();
 
-		WebElement your_mess = driver
-				.findElement(By.xpath("//div[@class='w-4/12 smtablet:w-full rigth-input']/div/p[1]"));
+		WebElement your_mess = driver.findElement(By.id("message"));
 		String print_mess = your_mess.getText();
 
 		if (print_mess.contains(message)) {
@@ -81,7 +79,6 @@ public class SimpleFormDemoclass {
 		} else {
 			System.out.println("Message is not matched!");
 		}
-
 	}
 
 	@AfterMethod
@@ -89,6 +86,5 @@ public class SimpleFormDemoclass {
 		driver.executeScript("lambda-status=" + Status);
 		driver.quit();
 	}
-
 }
 

@@ -35,6 +35,7 @@ public class InputFormSubmitClass {
 		caps.setCapability("build", "TestNG With Java");
 		caps.setCapability("name", m.getName() + this.getClass().getName());
 		caps.setCapability("plugin", "git-testng");
+        caps.setCapability("network","true");
 
 		String[] Tags = new String[] { "Feature", "Magicleap", "Severe" };
 		caps.setCapability("tags", Tags);
@@ -51,7 +52,7 @@ public class InputFormSubmitClass {
 		Thread.sleep(2000);
 
 		WebElement InputFormLink = driver
-				.findElement(By.xpath("//a[@href='https://www.lambdatest.com/selenium-playground/input-form-demo']"));
+				.findElement(By.xpath("//a[contains(@href, 'input-form-demo')]"));
 		InputFormLink.click();
 
 		WebElement submit = driver.findElement(By.xpath("//div[@class='text-right mt-20']/button"));
@@ -59,8 +60,7 @@ public class InputFormSubmitClass {
 
 		Thread.sleep(1000);
 
-		WebElement name = driver.findElement(By.xpath(
-				"//div[@class='form-group w-4/12 smtablet:w-full text-section pr-20 smtablet:pr-0']/input[@type='text']"));
+		WebElement name = driver.findElement(By.id("name"));
 		String Expected_validation = name.getAttribute("validationMessage");
 		String Actual_validation = "Please fill out this field.";
 		Assert.assertEquals(Actual_validation, Expected_validation);
@@ -73,44 +73,35 @@ public class InputFormSubmitClass {
 
 		name.sendKeys("TestName");
 
-		WebElement email = driver.findElement(By.xpath(
-				"//div[@class='form-group w-4/12 smtablet:w-full text-section pr-20 smtablet:pr-0']/input[@type='email']"));
+		WebElement email = driver.findElement(By.id("inputEmail4"));
 		email.sendKeys("Test123@gmail.com");
 
-		WebElement password = driver
-				.findElement(By.xpath("//div[@class='form-group w-4/12 smtablet:w-full']/input[@type='password']"));
+		WebElement password = driver.findElement(By.id("inputPassword4"));
 		password.sendKeys("Test@1234");
 
-		WebElement company = driver.findElement(By.xpath("//*[@id=\"company\"]"));
+		WebElement company = driver.findElement(By.id("company"));
 		company.sendKeys("TestCompany");
 
-		WebElement website = driver
-				.findElement(By.xpath("//div[@class='form-group w-6/12 smtablet:w-full']/input[@id=\"websitename\"]"));
+		WebElement website = driver.findElement(By.id("websitename"));
 		website.sendKeys("Testdomain.com");
 
-		WebElement country = driver.findElement(By.xpath(
-				"//div[@class='form-group w-6/12 smtablet:w-full pr-20 smtablet:pr-0']/select[@name='country']"));
+		WebElement country = driver.findElement(By.name("country"));
 		Select select = new Select(country);
 		select.selectByVisibleText("United States");
 
-		WebElement city = driver
-				.findElement(By.xpath("//div[@class='form-group w-6/12 smtablet:w-full']/input[@id='inputCity']"));
+		WebElement city = driver.findElement(By.id("inputCity"));
 		city.sendKeys("TestCity");
 
-		WebElement address1 = driver.findElement(By.xpath(
-				"//div[@class='form-group w-6/12 smtablet:w-full pr-20 smtablet:pr-0']/input[@id='inputAddress1']"));
+		WebElement address1 = driver.findElement(By.id("inputAddress1"));
 		address1.sendKeys("TestAddress1");
 
-		WebElement address2 = driver
-				.findElement(By.xpath("//div[@class='form-group w-6/12 smtablet:w-full']/input[@id='inputAddress2']"));
+		WebElement address2 = driver.findElement(By.id("inputAddress2"));
 		address2.sendKeys("TestAddress2");
 
-		WebElement state = driver.findElement(By.xpath(
-				"//div[@class='form-group w-6/12 smtablet:w-full pr-20 smtablet:pr-0']/input[@id='inputState']"));
+		WebElement state = driver.findElement(By.id("inputState"));
 		state.sendKeys("TestState");
 
-		WebElement zipcode = driver
-				.findElement(By.xpath("//div[@class='form-group w-6/12 smtablet:w-full']/input[@id='inputZip']"));
+		WebElement zipcode = driver.findElement(By.id("inputZip"));
 		zipcode.sendKeys("360002");
 
 		submit.click();
@@ -118,7 +109,7 @@ public class InputFormSubmitClass {
 		Thread.sleep(2000);
 
 		WebElement successmessage = driver.findElement(
-				By.xpath("//div[@class='loginform border border-gray-90 mt-20 p-20']/p[@class='success-msg hidden']"));
+				By.xpath("//p[@class='success-msg hidden']"));
 		String Actualmessage = successmessage.getText();
 		String Expectedmessage = "Thanks for contacting us, we will get back to you shortly.";
 
@@ -127,11 +118,9 @@ public class InputFormSubmitClass {
 		} else {
 			System.out.println("Success message is not properly appear.");
 		}
-
 	}
 
 	@AfterMethod
-
 	public void tearDown() {
 		driver.executeScript("lambda-status=" + Status);
 		driver.quit();

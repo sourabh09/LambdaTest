@@ -33,6 +33,7 @@ public class DragAndDropSlidersClass {
 		caps.setCapability("build", "TestNG With Java");
 		caps.setCapability("name", m.getName() + this.getClass().getName());
 		caps.setCapability("plugin", "git-testng");
+        caps.setCapability("network","true");
 
 		String[] Tags = new String[] { "Feature", "Magicleap", "Severe" };
 		caps.setCapability("tags", Tags);
@@ -49,7 +50,7 @@ public class DragAndDropSlidersClass {
 		Thread.sleep(2000);
 
 		WebElement DrageAndDroplink = driver.findElement(
-				By.xpath("//a[@href='https://www.lambdatest.com/selenium-playground/drag-drop-range-sliders-demo']"));
+				By.xpath("//a[contains(@href, 'drag-drop-range-sliders-demo')]"));
 		DrageAndDroplink.click();
 
 		Thread.sleep(1000);
@@ -69,15 +70,12 @@ public class DragAndDropSlidersClass {
 		} else {
 			System.out.println("Range is not matched!");
 		}
-
 	}
 
 	@AfterMethod
-
 	public void tearDown() {
 		driver.executeScript("lambda-status=" + Status);
 		driver.quit();
 	}
-
 }
 
