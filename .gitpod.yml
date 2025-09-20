@@ -1,0 +1,11 @@
+# .gitpod.yml
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - init: npm install   # runs once on workspace creation
+    command: npm start  # runs every time workspace starts
+
+ports:
+  - port: 3000
+    onOpen: open-preview
