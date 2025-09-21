@@ -3,6 +3,8 @@ package dragAndDropSliders;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -42,21 +44,19 @@ public class DragAndDropSlidersClass {
 	}
 
 	@Test
-
 	public void TestScenario2() throws InterruptedException {
 
 		driver.get("https://www.lambdatest.com/selenium-playground/");
 		driver.manage().window().maximize();
-		Thread.sleep(2000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
 
-		WebElement DrageAndDroplink = driver.findElement(
+        WebElement DrageAndDroplink = driver.findElement(
 				By.xpath("//a[contains(@href, 'drag-drop-range-sliders-demo')]"));
 		DrageAndDroplink.click();
 
-		Thread.sleep(1000);
 		WebElement slider3 = driver.findElement(By.xpath(".//*[@id='slider3']/div/input"));
 		// js.executeScript("arguments[0].scrollIntoView(true);", slider3);
-		Thread.sleep(1000);
+
 		Actions move = new Actions(driver);
 		Actions action = (Actions) move.dragAndDropBy(slider3, 99, 0);
 		action.perform();

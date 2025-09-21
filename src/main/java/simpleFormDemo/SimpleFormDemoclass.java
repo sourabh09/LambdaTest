@@ -3,6 +3,8 @@ package simpleFormDemo;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -42,12 +44,11 @@ public class SimpleFormDemoclass {
 	}
 
 	@Test
-
 	public void TestScenario1() throws InterruptedException {
 
 		driver.get("https://www.lambdatest.com/selenium-playground/");
 		driver.manage().window().maximize();
-		Thread.sleep(2000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
 
 		WebElement SimpleFormDemoLink = driver
 				.findElement(By.xpath("//a[contains(@href, 'simple-form-demo')]"));
@@ -64,10 +65,8 @@ public class SimpleFormDemoclass {
 
 		String message = "Welcome to LambdaTest.";
 		WebElement mess_send = driver.findElement(By.id("user-message"));
-		Thread.sleep(1000);
 		mess_send.sendKeys(message);
 
-		Thread.sleep(1000);
 		WebElement button = driver.findElement(By.id("showInput"));
 		button.click();
 

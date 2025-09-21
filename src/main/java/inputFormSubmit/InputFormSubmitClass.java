@@ -3,6 +3,8 @@ package inputFormSubmit;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -44,12 +46,11 @@ public class InputFormSubmitClass {
 	}
 
 	@Test
-
 	public void TestScenario3() throws InterruptedException {
 
 		driver.get("https://www.lambdatest.com/selenium-playground/");
 		driver.manage().window().maximize();
-		Thread.sleep(2000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
 
 		WebElement InputFormLink = driver
 				.findElement(By.xpath("//a[contains(@href, 'input-form-demo')]"));
@@ -57,8 +58,6 @@ public class InputFormSubmitClass {
 
 		WebElement submit = driver.findElement(By.xpath("//div[@class='text-right mt-20']/button"));
 		submit.click();
-
-		Thread.sleep(1000);
 
 		WebElement name = driver.findElement(By.id("name"));
 		String Expected_validation = name.getAttribute("validationMessage");
@@ -105,8 +104,6 @@ public class InputFormSubmitClass {
 		zipcode.sendKeys("360002");
 
 		submit.click();
-
-		Thread.sleep(2000);
 
 		WebElement successmessage = driver.findElement(
 				By.xpath("//p[@class='success-msg hidden']"));
