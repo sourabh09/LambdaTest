@@ -4,9 +4,11 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.HashMap;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -28,21 +30,23 @@ public class InputFormSubmitClass {
 				: System.getenv("LT_ACCESS_KEY");
 		String hub = "@hub.lambdatest.com/wd/hub";
 
-		DesiredCapabilities caps = new DesiredCapabilities();
-		// Configure your capabilities here
-		caps.setCapability("platform", "Windows 10");
-		caps.setCapability("browserName", "Chrome");
-		caps.setCapability("version", "103.0");
-		caps.setCapability("resolution", "1024x768");
-		caps.setCapability("build", "TestNG With Java");
-		caps.setCapability("name", m.getName() + this.getClass().getName());
-		caps.setCapability("plugin", "git-testng");
-        caps.setCapability("network","true");
+        ChromeOptions browserOptions = new ChromeOptions();
+        browserOptions.setPlatformName("Windows 10");
+        browserOptions.setBrowserVersion("dev");
+        HashMap<String, Object> ltOptions = new HashMap<String, Object>();
+        ltOptions.put("visual", true);
+        ltOptions.put("video", true);
+        ltOptions.put("network", true);
+        ltOptions.put("build", "TestNG With Java");
+        ltOptions.put("project", "Untitled");
+        String[] customTags = {"Feature", "Magicleap", "Severe"};
+        ltOptions.put("tags", customTags);
+        ltOptions.put("console", "info");
+        ltOptions.put("w3c", true);
+        ltOptions.put("plugin", "java-testNG");
+        browserOptions.setCapability("LT:Options", ltOptions);
 
-		String[] Tags = new String[] { "Feature", "Magicleap", "Severe" };
-		caps.setCapability("tags", Tags);
-
-		driver = new RemoteWebDriver(new URL("https://" + username + ":" + authkey + hub), caps);
+		driver = new RemoteWebDriver(new URL("https://" + username + ":" + authkey + hub), browserOptions);
 	}
 
 	@Test
